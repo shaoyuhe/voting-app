@@ -47,6 +47,10 @@ class Worker {
 
   static Jedis connectToRedis(String host) {
     Jedis conn = new Jedis(host);
+    String password = System.getenv("REDIS_PASSWORD");
+    if (password != null && password.length() > 0) {
+      conn.auth(password);
+    }
 
     while (true) {
       try {
